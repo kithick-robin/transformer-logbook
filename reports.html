@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Report</title>
+</head>
+<body>
+
+<h2>Transformer Electrical Test Report</h2>
+
+<p><b>Rating:</b> {{data[1]}} kVA</p>
+<p><b>HV:</b> {{data[2]}} V</p>
+<p><b>LV:</b> {{data[3]}} V</p>
+<p><b>Vector Group:</b> {{data[4]}}</p>
+
+<h3>Test Results</h3>
+<p>IR HV: {{data[5]}} MΩ</p>
+<p>IR LV: {{data[6]}} MΩ</p>
+<p>WR HV: {{data[7]}} Ω</p>
+<p>WR LV: {{data[8]}} Ω</p>
+<p>TTR: {{data[9]}}</p>
+
+<h2 style="color:green;">FINAL RESULT: {{data[10]}}</h2>
+
+</body>
+</html>
