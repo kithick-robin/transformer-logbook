@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 DB_NAME = "/tmp/database.db"
 
@@ -90,3 +90,4 @@ def report():
     data = cur.fetchone()
     con.close()
     return render_template("report.html", data=data)
+
