@@ -2,16 +2,18 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Test Report</title>
+<title>Transformer Test Report</title>
 </head>
 <body>
 
 <h2>Transformer Electrical Test Report</h2>
 
 <p><b>Rating:</b> {{data[1]}} kVA</p>
-<p><b>HV:</b> {{data[2]}} V</p>
-<p><b>LV:</b> {{data[3]}} V</p>
+<p><b>HV Voltage:</b> {{data[2]}} V</p>
+<p><b>LV Voltage:</b> {{data[3]}} V</p>
 <p><b>Vector Group:</b> {{data[4]}}</p>
+
+<hr>
 
 <h3>Test Results</h3>
 <p>IR HV: {{data[5]}} MΩ</p>
@@ -20,7 +22,21 @@
 <p>WR LV: {{data[8]}} Ω</p>
 <p>TTR: {{data[9]}}</p>
 
-<h2 style="color:green;">FINAL RESULT: {{data[10]}}</h2>
+<hr>
+
+<h2>FINAL RESULT: {{data[10]}}</h2>
+
+<h3>Diagnosis:</h3>
+<p>{{data[11]}}</p>
+
+<hr>
+
+<p><b>EPLAN Reference:</b></p>
+<ul>
+  <li>IR Test → EPLAN-IR-01</li>
+  <li>WR Test → EPLAN-WR-02</li>
+  <li>TTR Test → EPLAN-TTR-03</li>
+</ul>
 
 </body>
 </html>
