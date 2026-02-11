@@ -68,6 +68,5 @@ def report():
     data = cur.fetchone()
     con.close()
     return render_template("report.html", data=data)
-if__name__=="__main__":
-app.run()
-
+    if __name__ == "__main__":
+    app.run()
