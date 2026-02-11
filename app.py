@@ -15,8 +15,10 @@ def index():
         con = get_db()
         cur = con.cursor()
 
-        cur.execute("""
-        CREATE TABLE IF NOT EXISTS transformer (
+        cur.execute("DROP TABLE IF EXISTS transformer")
+
+cur.execute("""
+CREATE TABLE transformer (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             rating TEXT,
             hv TEXT,
@@ -81,3 +83,4 @@ def report():
     data = cur.fetchone()
     con.close()
     return render_template("report.html", data=data)
+
