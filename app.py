@@ -1,4 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import send_file
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from io import BytesIOfrom flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__, template_folder="templates")
@@ -90,4 +96,54 @@ def report():
     data = cur.fetchone()
     con.close()
     return render_template("report.html", data=data)
+@app.route("/download")
+def download():
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM transformer ORDER BY id DESC LIMIT 1")
+    data = cur.fetchone()
+    con.close()
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer)
+
+    elements = []
+    styles = getSampleStyleSheet()
+
+    elements.append(Paragraph("<b>Transformer Test Certificate</b>", styles['Title']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    elements.append(Paragraph(f"Rating: {data[1]} kVA", styles['Normal']))
+    elements.append(Paragraph(f"HV: {data[2]} V", styles['Normal']))
+    elements.append(Paragraph(f"LV: {data[3]} V", styles['Normal']))
+    elements.append(Paragraph(f"Vector Group: {data[4]}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    elements.append(Paragraph("<b>Test Results</b>", styles['Heading2']))
+    elements.append(Paragraph(f"IR HV: {data[5]} MΩ", styles['Normal']))
+    elements.append(Paragraph(f"IR LV: {data[6]} MΩ", styles['Normal']))
+    elements.append(Paragraph(f"WR HV: {data[7]} Ω", styles['Normal']))
+    elements.append(Paragraph(f"WR LV: {data[8]} Ω", styles['Normal']))
+    elements.append(Paragraph(f"TTR: {data[9]}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    elements.append(Paragraph(f"<b>Final Result:</b> {data[10]}", styles['Normal']))
+    elements.append(Paragraph(f"<b>Diagnosis:</b> {data[11]}", styles['Normal']))
+    elements.append(Spacer(1, 0.5 * inch))
+
+    elements.append(Paragraph("EPLAN Reference: IR-01, WR-02, TTR-03", styles['Normal']))
+    elements.append(Spacer(1, 0.5 * inch))
+
+    elements.append(Paragraph("Authorized Engineer Signature: ___________________", styles['Normal']))
+
+    doc.build(elements)
+
+    buffer.seek(0)
+
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name="Transformer_Test_Certificate.pdf",
+        mimetype='application/pdf'
+    )
 
