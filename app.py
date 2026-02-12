@@ -4,7 +4,8 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
-from io import BytesIOfrom flask import Flask, render_template, request, redirect, url_for
+from io import BytesIO
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__, template_folder="templates")
@@ -146,4 +147,5 @@ def download():
         download_name="Transformer_Test_Certificate.pdf",
         mimetype='application/pdf'
     )
+
 
